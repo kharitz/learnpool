@@ -7,7 +7,7 @@
 
 ### Main Requirements
 - PyTorch >1.4.0
-- Pytorch Geometric >1.4.3 and dependencies [here](https://pytorch-geometric.readthedocs.io/en/latest/)
+- [Pytorch Geometric](https://pytorch-geometric.readthedocs.io/en/latest/) >1.4.3 and dependencies 
 
 ### Training
 
