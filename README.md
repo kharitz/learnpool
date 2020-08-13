@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Learnable Pooling in Graph Convolution Networks for Brain Surface Analysis
 
 ### The repository contains the implementation of the paper titled "Learnable Pooling in Graph Convolution Networks for Brain Surface Analysis"
@@ -16,8 +15,3 @@ The model can be trained using below command:
 ```
 python3 main.py --config ./learnpool/config/config.json --gpu 0
 ```
-
-=======
-# Learnpool
-Learnable Pooling in Graph Convolution Networksfor Brain Surface Analysis
->>>>>>> Update README.md
