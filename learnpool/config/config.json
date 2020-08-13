@@ -1,0 +1,30 @@
+{
+  "directories": {
+      "datafile": "./learnpool/data/mindboggle/",
+      "out_dir": "Experiments_",
+      "ConfigName": "Exp_1"
+  },
+  "model_params": {
+    "fin": 5,
+    "fou1": 32,
+    "clus": 16,
+    "fou2": 16,
+    "hlin": 8,
+    "outp": 2,
+    "psudim": 3
+  },
+  "optimizer": {
+    "B1": 0.9,
+    "B2": 0.999,
+    "LR": 0.0001
+  },
+
+  "generator": {
+      "num_epochs": 2500,
+      "initial_epoch": 0,
+      "batch_size": 1,
+      "plot_separate": 1,
+      "set_lamda": 0.0001,
+      "loss_up": 1
+  }
+}
