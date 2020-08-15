@@ -59,14 +59,14 @@ def main(config):
     bsz = generator_config['batch_size']  # Batch size for training/testing loaders
 
     # Get the model architecture
-    model_params = config['model_params']
-    fin = model_params['fin']
-    fou1 = model_params['fou1']
-    clus = model_params['clus']
-    fou2 = model_params['fou2']
-    hlin = model_params['hlin']
-    outp = model_params['outp']
-    psudim = model_params['psudim']
+    model_params = config['model_params'] 
+    fin = model_params['fin'] # input node features
+    fou1 = model_params['fou1'] # Output node features for first GC block
+    clus = model_params['clus'] # Number of clusters learned for first GC block
+    fou2 = model_params['fou2'] # Output node features for second GC block
+    hlin = model_params['hlin'] # Output of the first liner layer
+    outp = model_params['outp'] # Number of output classes
+    psudim = model_params['psudim'] # Dimension of the pseudo-coordinates
 
     optm_config = config['optimizer']
     b1 = optm_config['B1']  # B1 for Adam Optimizer: Ex. 0.9
