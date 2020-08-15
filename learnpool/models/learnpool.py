@@ -60,28 +60,52 @@ def pros_data(data):
 
 def learn_pool(mat_y, mat_s, ori_adj, lapl_gp, domain, notlast):
     """
-        Learnable pooling operation
-        Computes the output node features and adj matrix after the downstream pooling operation
-        Computes the Laplacian regularization and pseudo-coordinates for next convolution layers
+        Learnable pooling operation.         
+        Output of the final convolution block (indicated by 'notlast') is given to linear layer. Hence,
+        The regularization loss, output adjaceny, and pseudo-coordingates are set to 0
+        
+        Args:
+        mat_y --> computed latent features for each node. tensor[nds, fou1] 
+        mat_s --> computed node clusters features used to aggregated the nodes. tensor[nds, clus]
+        ori_adj --> sparse adjaceny matrix. sparsetensor[nds, nds]
+        lapl_gp --> sparse laplacian matrix. sparsetensor[nds, nds]
+        domain --> aligned spectral coordinates. tensor[nds, 3]
+        notlast --> 1 - for last graph convolution block; 0 - otherwise. scalar
+        Returns:
+        out --> pooled  features. tensor[clus, fou1]
+        out_adj --> adjaceny matrix for the downsampled graph. tensor[clus, clus]
+        reg_lss --> laplacian regularizer. scalar
+        out_pseudo_cord --> psueudo coordinates of cluster 
+        idx --> connectivity indexes. tensor[2, out_adj_edges]
+        val --> weight between the edges. tensor[out_adj_edges, 1]
+
 
     """
-
+    # Computing the probaiblity of a node belonging to a cluster
     mat_s = torch.softmax(mat_s, dim=-1)
     mat_s_t = mat_s.transpose(0, 1)
-
+    
+    # Pooled  features: Y = S^T x Y 
     out = torch.matmul(mat_s_t, mat_y)
+    
+    # Adjaceny matrix for the downsampled graph: A = S^T x A x S 
     out_adj = torch.matmul(mat_s_t, torch.matmul(ori_adj, mat_s))
 
     # If intermediate pooling, adj matrix is computed
     if notlast:
+        # Laplacian regluarization: L = trace(S^T x L x S)
         reg_lss = torch.trace(torch.matmul(mat_s_t, torch.matmul(lapl_gp, mat_s))) / mat_s.shape[0]
-        idx, val = dense_to_sparse(out_adj)
+        
+        # Compute spectral coordinates and normalized psueudo coordinates of cluster: U = S^T x U 
         out_domain = torch.matmul(mat_s_t, domain)
         out_pseudo_cord = out_domain[idx[0, :], :] - out_domain[idx[1, :], :]
         max_value = out_pseudo_cord.abs().max()
         out_pseudo_cord = out_pseudo_cord / (2 * max_value) + 0.5
+        
+        # Compute sparse adj matrix
+        idx, val = dense_to_sparse(out_adj)
 
-    # For last pooling layer adj matrix not computed, graph collapsed to classification/regression task
+    # Regularization loss, output adjaceny, and pseudo-coordingates are set to 0
     else:
         reg_lss = out_pseudo_cord = idx = val = 0
 
