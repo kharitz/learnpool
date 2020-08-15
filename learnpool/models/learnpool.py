@@ -8,7 +8,9 @@ from torch_sparse import coalesce
 def dense_to_sparse(tensor):
     """
         Computes the sparse matrix of dense matrix
-        Refer the simpler/better PyTorch Geometric: torch_geometric.utils.dense_to_sparse implementation
+        Python class to describe the brain graph object with various attributes
+        Adapted from PyTorch Geometric torch_geometric.utils.dense_to_sparse
+        Source: https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/utils/sparse.py#L1
     """
 
     index = tensor.nonzero()
@@ -21,9 +23,19 @@ def dense_to_sparse(tensor):
 
 def pros_data(data):
     """
-        Computes pseudo-coordinates from the data
-        pseudo-coordinates: Spectral or Polar or Cartesian domain. default: aligned spectral coordinates
-        adj and laplacian matrix: sparse cuda tensors
+        A function to process data used for graph convolution layers
+        Args:
+        data --> the data object contation all the brain surface information
+            data._x --> the input node features of the graph. tensor[nds, 5]
+            data._edge_idx --> weighted connectivity indexes. tensor[2, num_edges]
+            data._edge_wht --> weight between the edges. tensor[num_edges, 1]
+        Returns:
+        x --> the input node features of the graph. tensor[nds, 5]
+        edge_index --> weighted connectivity indexes. tensor[2, num_edges]
+        pseudo_cord --> pseudo-coordinates capturing node relations. tensor[num_edges, 3] 
+        ori_adj --> sparse adjaceny matrix. sparsetensor[nds, nds] 
+        lapl_gp --> sparse graph laplacian matrix. sparsetensor[nds, nds]
+        domain --> aligned spectral coordinates. tensor[nds, 3]
     """
     x, edge_index, edge_attr = data._x, data._edge_idx, data._edge_wht.squeeze()
     num_nodes = x.size(0)
@@ -33,7 +45,7 @@ def pros_data(data):
     max_value = pseudo_cord.abs().max()
     pseudo_cord = pseudo_cord / (2 * max_value) + 0.5
 
-    # Compute adj and Laplacian matrix
+    # Compute sparse adj and sparse Laplacian matrix
     ori_adj = torch.sparse.FloatTensor(edge_index, edge_attr, torch.Size([num_nodes, num_nodes]))
     lapl = sp.csgraph.laplacian(sp.csr_matrix((edge_attr.cpu(),
                                                edge_index.cpu()),
@@ -49,7 +61,7 @@ def pros_data(data):
 
 def learn_pool(mat_y, mat_s, ori_adj, lapl_gp, domain, notlast):
     """
-        Learnable pooling operation:
+        Learnable pooling operation
         Computes the output node features and adj matrix after the downstream pooling operation
         Computes the Laplacian regularization and pseudo-coordinates for next convolution layers
 
