@@ -4,8 +4,9 @@ from learnpool.input.graph_sample import GraphSample
 
 class Batch(GraphSample):
     """
-    Refer to torch_geometric.data.batch for simpler/recent implementation. This python class is from
-    the earlier versions of PyTorch Geometric
+    A python class to model the batch of graph.
+    Adapted from the PyTorch Geometric torch_geometric.data.batch implementation
+    Source: https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/data/batch.py#L8
 
     """
     def __init__(self, batch=None, **kwargs):
