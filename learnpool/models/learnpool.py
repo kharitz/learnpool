@@ -36,6 +36,7 @@ def pros_data(data):
         lapl_gp --> sparse graph laplacian matrix. sparsetensor[nds, nds]
         domain --> aligned spectral coordinates. tensor[nds, 3]
     """
+    
     x, edge_index, edge_attr = data._x, data._edge_idx, data._edge_wht.squeeze()
     num_nodes = x.size(0)
     domain = data._x[:, :3]  # data._x = Aligned spectral coordinates[nds, :3] + surface features[nds, 3:]
@@ -114,17 +115,16 @@ def learn_pool(mat_y, mat_s, ori_adj, lapl_gp, domain, notlast):
 class GCNet(torch.nn.Module):
     def __init__(self, fin, fou1, clus, fou2, hlin, outp, psudim):
         super(GCNet, self).__init__()
-        
-        '''
-        The Graph convolution block architecture: Set in config file
-        fin    --> Input node features
-        fou1   --> Output node features for first GC block
-        clus   --> Number of clusters learned for first GC block
-        fou2   --> Output node features for second GC block
-        hlin   --> Output of the first liner layer
-        outp   --> Number of output classes
-        psudim --> Dimension of the pseudo-coordinates
-        '''
+        """
+            The Graph convolution block architecture: Set in config file
+            fin    --> Input node features
+            fou1   --> Output node features for first GC block
+            clus   --> Number of clusters learned for first GC block
+            fou2   --> Output node features for second GC block
+            hlin   --> Output of the first liner layer
+            outp   --> Number of output classes
+            psudim --> Dimension of the pseudo-coordinates
+        """
 
         self.gnn1_pool = SplineConv(fin, clus, dim=psudim, kernel_size=1)
         self.gnn1_embd = SplineConv(fin, fou1, dim=psudim, kernel_size=1)
