@@ -5,7 +5,8 @@ from learnpool.input.batch import Batch
 class DataLoader(torch.utils.data.DataLoader):
     """
     Pytorch DataLoader to load brain graphs in batches
-    learnpool.input.batch: Refers to torch_geometric.data.batch for simpler implementation
+    Batch is Adapted from PyTorch Geometric torch_geometric.data.batch
+    Source: https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/data/batch.py#L8
  the
     """
 
