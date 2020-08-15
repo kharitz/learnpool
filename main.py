@@ -60,7 +60,7 @@ def main(config):
 
     # Get the model architecture
     model_params = config['model_params'] 
-    fin = model_params['fin'] # input node features
+    fin = model_params['fin'] # Input node features
     fou1 = model_params['fou1'] # Output node features for first GC block
     clus = model_params['clus'] # Number of clusters learned for first GC block
     fou2 = model_params['fou2'] # Output node features for second GC block
