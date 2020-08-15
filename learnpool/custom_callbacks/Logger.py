@@ -3,6 +3,9 @@ import pandas as pd
 from os.path import join
 matplotlib.use('Agg')
 
+'''
+A python class to log the loss and accuracy to a csv file
+'''
 
 class Logger(object):
 
