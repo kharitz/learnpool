@@ -5,7 +5,10 @@ from os.path import join
 import matplotlib.pyplot as plt
 matplotlib.use('Agg')
 
-
+'''
+A python class to plot the values from the log file.
+The loss and accuracy plots are saved in "plot" folder for training, validation and testing.
+'''
 class LossPlotter(object):
 
     def __init__(self, mylog_path="./log", mylog_name="training.log", myloss_names=["loss"],
