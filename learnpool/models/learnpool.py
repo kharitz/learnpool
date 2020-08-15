@@ -78,9 +78,8 @@ def learn_pool(mat_y, mat_s, ori_adj, lapl_gp, domain, notlast):
         out_pseudo_cord --> psueudo coordinates of cluster 
         idx --> connectivity indexes. tensor[2, out_adj_edges]
         val --> weight between the edges. tensor[out_adj_edges, 1]
-
-
     """
+    
     # Computing the probaiblity of a node belonging to a cluster
     mat_s = torch.softmax(mat_s, dim=-1)
     mat_s_t = mat_s.transpose(0, 1)
