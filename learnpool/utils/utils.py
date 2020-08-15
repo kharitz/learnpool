@@ -2,6 +2,11 @@
 def bin_accuracy(output, target):
     """
     Computes the accuracy for multiple binary predictions
+    Args:   
+    output --> Class prediction
+    target --> Class label
+    Returns:
+    acc --> Binary classification accuracy 
 
     """
     oo = output.clone()
