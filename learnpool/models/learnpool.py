@@ -8,7 +8,6 @@ from torch_sparse import coalesce
 def dense_to_sparse(tensor):
     """
         Computes the sparse matrix of dense matrix
-        Python class to describe the brain graph object with various attributes
         Adapted from PyTorch Geometric torch_geometric.utils.dense_to_sparse
         Source: https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/utils/sparse.py#L1
     """
@@ -25,7 +24,7 @@ def pros_data(data):
     """
         A function to process data used for graph convolution layers
         Args:
-        data --> the data object contation all the brain surface information
+        data --> the data object containing all the brain surface information
             data._x --> the input node features of the graph. tensor[nds, 5]
             data._edge_idx --> weighted connectivity indexes. tensor[2, num_edges]
             data._edge_wht --> weight between the edges. tensor[num_edges, 1]
