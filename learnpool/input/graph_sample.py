@@ -2,8 +2,8 @@ import torch
 
 """
 Python class to describe the brain graph object with various attributes
-Refer PyTorch Geometric torch_geometric.data.data for simpler implementation
-
+Adapted from PyTorch Geometric torch_geometric.data.data
+Source: https://github.com/rusty1s/pytorch_geometric/blob/master/torch_geometric/data/data.py#L42
 """
 
 
