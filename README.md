@@ -2,7 +2,7 @@
 
 This repository contains the pytorch implementation of our paper titled "Adaptive Graph Convolution Pooling for Brain Surface Analysis" published in IPMI 2019. "Learnable Pooling in Graph Convolution Networks for Brain Surface Analysis", is an extension of this work currently under review at IEEE-PAMI. This work proposes a new learnable graph pooling method for processing multiple surface-valued data to output subject-based information. The proposed method innovates by learning an intrinsic aggregation of graph nodes based on graph spectral embedding.
 
-The [GraphSpectreal alignment](https://github.com/kharitz/spectral_alignment.git) repository reads the FreeSurfer processed brain mesh and generates the aligned spectral features, embeddings, and labels necessary for this work. 
+The [Graph Spectreal alignment](https://github.com/kharitz/spectral_alignment.git) repository reads the FreeSurfer processed brain mesh and generates the aligned spectral features, embeddings, and labels necessary for this work. 
 
 ### Where to find the dataset?
 - The MindBoggle dataset is available to download [here](https://osf.io/nhtur/).
